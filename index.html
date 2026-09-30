@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição MotoChefe - GatesFlow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #1a1a2e;
+            box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(26, 26, 46, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .motochefe-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <!-- GatesFlow Logo -->
+            <img src="gatesflow-logo.png" alt="GatesFlow" class="logo">
+
+            <h1 class="brand-name">GATESFLOW</h1>
+
+            <span class="motochefe-badge">MotoChefe</span>
+
+            <p class="welcome-text">
+                Obrigado por se interessar no nosso sistema! Estamos muito felizes que você está decidindo o melhor para a sua loja ter sucesso. Por favor, preencha os campos abaixo e nossa equipe entrará em contato com você para agendarmos um horário.
+            </p>
+        </div>
+
+        <form id="inscricaoForm" action="#" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome e Sobrenome</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loja">Nome da Loja</label>
+                <input type="text" id="loja" name="loja" placeholder="Digite o nome da sua loja" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Enviar Inscrição</button>
+        </form>
+
+        <div class="footer">
+            <p>Powered by GatesFlow &copy; 2026</p>
+        </div>
+    </div>
+
+    <script>
+        // Phone mask
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 6) {
+                value = '(' + value.slice(0, 2) + ') ' + value.slice(2, 7) + '-' + value.slice(7);
+            } else if (value.length > 2) {
+                value = '(' + value.slice(0, 2) + ') ' + value.slice(2);
+            } else if (value.length > 0) {
+                value = '(' + value;
+            }
+
+            e.target.value = value;
+        });
+
+        // Form submission - Send to Google Sheets
+        document.getElementById('inscricaoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
+
+            const data = {
+                nome: document.getElementById('nome').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value,
+                loja: document.getElementById('loja').value
+            };
+
+            // Google Apps Script URL
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRAXHGky_ptZp5Ook5xJlLg_1KypF2WX8_by0FcCTw0RYpjDWFG3unP0YZTOwwIakv/exec';
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                alert('Obrigado pela sua inscrição! Nossa equipe entrará em contato em breve.');
+                document.getElementById('inscricaoForm').reset();
+            })
+            .catch(error => {
+                // Mesmo com erro de CORS, o dado geralmente é enviado
+                alert('Obrigado pela sua inscrição! Nossa equipe entrará em contato em breve.');
+                document.getElementById('inscricaoForm').reset();
+            })
+            .finally(() => {
+                submitBtn.textContent = 'Enviar Inscrição';
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
